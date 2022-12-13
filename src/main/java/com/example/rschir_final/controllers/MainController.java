@@ -71,4 +71,14 @@ public class MainController
         model.addAttribute("name", name);
         return "home";
     }
+
+    @GetMapping("/pdf")
+    public String pdf_get(Model model){
+        return "pdf";
+    }
+    @GetMapping("/pdf")
+    public String pdf_post(Model model){
+
+        return "pdf";
+    }
 }
