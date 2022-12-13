@@ -5,11 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-    <form method="post" action="/">
-        <input type="hidden" name="lang" th:value="${var.change_to_lang}">
-        <button text="en"/>
-        <button name="theme" text="темная" value="dark" th:if="${theme == 'light'}"/>
-        <button name="theme" text="светлая" value="light" th:if="${theme == 'dark'}"/>
+    <p th:text="${'Hello, ' + name}"/>
+    <form method="post" action="/change_name">
+        <input type="text" name="name">
+        <button th:text="Change" type="submit"></button>
+    </form>
+    <form method="post" action="/change_theme_and_lang">
+        <button name="lang" th:text="${lang}" th:value="${change_to_lang}"></button>
+        <button name="theme" th:text="${theme}" th:value="${change_to_theme}"></button>
     </form>
 </body>
 </html>

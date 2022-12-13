@@ -15,8 +15,8 @@ import java.util.Map;
 @Controller
 public class MainController
 {
-    @PostMapping("/")
-    public String index_post(@RequestParam Map<String, Object> map, HttpServletResponse response){
+    @PostMapping("/change_theme_and_lang")
+    public String change_theme_and_lang_post(@RequestParam Map<String, Object> map, HttpServletResponse response){
         System.out.println(map);
         if(map.get("lang") != null)
         {
@@ -31,26 +31,44 @@ public class MainController
         return "redirect:/";
     }
 
+    @PostMapping("/change_name")
+    public String change_name_post(@RequestParam Map<String, Object> map, HttpServletResponse response){
+        System.out.println(map);
+        if(map.get("name") != null)
+        {
+            Cookie cookie = new Cookie("name", (String) map.get("name"));
+            response.addCookie(cookie);
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/")
-    public String index_get(@CookieValue(value = "theme", defaultValue = "light") String theme, @CookieValue(value = "lang", defaultValue = "ru") String lang, Model model){
+    public String index_get(@CookieValue(value = "name", defaultValue = "Гачи") String name, @CookieValue(value = "theme", defaultValue = "light") String theme, @CookieValue(value = "lang", defaultValue = "ru") String lang, Model model){
         Map<String, String> var = new HashMap<>();
         if(lang.equals("ru")){
             var.put("change_to_lang", "en");
+            var.put("lang", "ру");
             if(theme.equals("dark")){
                 var.put("change_to_theme", "light");
+                var.put("theme", "темный");
             }else{
                 var.put("change_to_theme", "dark");
+                var.put("theme", "светлый");
             }
         }else if(lang.equals("en")){
             var.put("change_to_lang", "ru");
+            var.put("lang", "en");
             if(theme.equals("dark")){
                 var.put("change_to_theme", "light");
+                var.put("theme", "dark");
             }else{
                 var.put("change_to_theme", "dark");
+                var.put("theme", "light");
             }
         }
-        model.addAttribute("theme", theme);
-        model.addAttribute("lang", lang);
+        for (Map.Entry<String, String> entry : var.entrySet())
+            model.addAttribute(entry.getKey(), entry.getValue());
+        model.addAttribute("name", name);
         return "home";
     }
 }
