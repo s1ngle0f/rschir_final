@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body th:style="${'background:' + cur_theme}">
     <p th:text="${'Hello, ' + name}"/>
     <form method="post" action="/change_name">
         <input type="text" name="name">
@@ -13,6 +13,9 @@
     <form method="post" action="/change_theme_and_lang">
         <button name="lang" th:text="${lang}" th:value="${change_to_lang}"></button>
         <button name="theme" th:text="${theme}" th:value="${change_to_theme}"></button>
+    </form>
+    <form method="get" action="/pdf">
+        <button>Upload file</button>
     </form>
 </body>
 </html>

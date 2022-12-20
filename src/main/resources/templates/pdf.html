@@ -1,13 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <form method="post" action="pdf">
+    <form method="post" action="/pdf" enctype="multipart/form-data">
         <input type="file" name="file">
         <button type="submit">Send</button>
     </form>
+    <div style="display: inline-grid;">
+        <div th:each="file : ${files}" style="display: inline-flex;">
+            <p th:text="${file.name}"></p>
+            <form th:action="|/pdf/download/${file.id}|" method="get">
+                <button type="submit">Download</button>
+            </form>
+            <form th:action="|/pdf/delete/${file.id}|" method="get">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
